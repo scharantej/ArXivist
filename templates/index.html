@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superconductor Paper Search</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Superconductor Paper Search</h1>
+<form action="/search" method="post">
+<input type="text" name="query" placeholder="Search for superconductor papers">
+<input type="submit" value="Search">
+</form>
+<div id="results"></div>
+
+<script>
+function displayResults(data) {
+const results = document.getElementById('results');
+
+for (let paper of data) {
+const paperElement = document.createElement('div');
+paperElement.classList.add('paper');
+
+const title = document.createElement('h2');
+title.textContent = paper.title;
+
+const abstract = document.createElement('p');
+abstract.textContent = paper.abstract;
+
+const link = document.createElement('a');
+link.href = paper.link;
+link.textContent = 'Read more';
+
+paperElement.appendChild(title);
+paperElement.appendChild(abstract);
+paperElement.appendChild(link);
+
+results.appendChild(paperElement);
+}
+}
+
+const form = document.querySelector('form');
+form.addEventListener('submit', (event) => {
+event.preventDefault();
+
+const query = event.target.querySelector('input[name="query"]').value;
+
+fetch('/search', {
+method: 'POST',
+headers: {
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({ query })
+})
+.then(response => response.json())
+.then(data => displayResults(data))
+.catch(error => console.error('Error fetching results:', error));
+});
+</script>
+</body>
+</html>
+
+
