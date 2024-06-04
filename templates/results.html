@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superconductor Paper Search Results</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Superconductor Paper Search Results</h1>
+<div id="results"></div>
+
+<script>
+const results = document.getElementById('results');
+
+for (let paper of data) {
+const paperElement = document.createElement('div');
+paperElement.classList.add('paper');
+
+const title = document.createElement('h2');
+title.textContent = paper.title;
+
+const abstract = document.createElement('p');
+abstract.textContent = paper.abstract;
+
+const link = document.createElement('a');
+link.href = paper.link;
+link.textContent = 'Read more';
+
+paperElement.appendChild(title);
+paperElement.appendChild(abstract);
+paperElement.appendChild(link);
+
+results.appendChild(paperElement);
+}
+</script>
+</body>
+</html>
+
